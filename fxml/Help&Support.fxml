@@ -38,9 +38,9 @@
             <Font name="Arial Bold" size="34.0" />
          </font>
       </Button>
-      <Pane layoutX="255.0" layoutY="230.0" opacity="0.5" prefHeight="750.0" prefWidth="1460.0" style="-fx-background-color: #00135e; -fx-background-radius: 25; -fx-border-radius: 30; -fx-border-color: #d0a933; -fx-border-width: 10;">
+      <Pane layoutX="235.0" layoutY="230.0" opacity="0.75" prefHeight="750.0" prefWidth="1460.0" style="-fx-background-color: #00135e; -fx-background-radius: 35; -fx-border-radius: 30; -fx-border-color: #d0a933; -fx-border-width: 10;">
          <children>
-            <Label contentDisplay="CENTER" layoutX="500.0" layoutY="55.0" text="Help &amp; Support" textFill="WHITE">
+            <Label contentDisplay="CENTER" layoutX="520.0" layoutY="55.0" text="Help &amp; Support" textFill="WHITE">
                <font>
                   <Font name="Arial Bold" size="50.0" />
                </font>
@@ -55,7 +55,7 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label layoutX="50.0" layoutY="420.0" prefHeight="155.0" prefWidth="1395.0" text="If you’re experiencing problems or need further assistance, you can contact our support team through the available hotline, email, or support form. Just let us know your concern, and we’ll do our best to help you as soon as possible." textFill="WHITE" wrapText="true">
+            <Label layoutX="50.0" layoutY="420.0" prefHeight="155.0" prefWidth="1395.0" text="If you’re experiencing problems or need further assistance, you can contact our support team through the available hotline (0995 123 4567), email (nulhuillier@gmail.com), or support form. Just let us know your concern, and we’ll do our best to help you as soon as possible." textFill="WHITE" wrapText="true">
                <font>
                   <Font size="30.0" />
                </font>
