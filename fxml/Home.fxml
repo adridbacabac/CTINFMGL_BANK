@@ -25,7 +25,7 @@
       </Label>
       <ImageView fitHeight="89.0" fitWidth="158.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@ACCOUNT%20LOGO.png" />
+            <Image url="@pic/ACCOUNT%20LOGO.png" />
          </image>
       </ImageView>
       <Label fx:id="usernamelabel" layoutX="206.0" layoutY="75.0" prefHeight="23.0" prefWidth="415.0" text="User" textFill="WHITE">
@@ -50,17 +50,17 @@
       </Button>
       <ImageView fitHeight="160.0" fitWidth="210.0" layoutX="1400.0" layoutY="248.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@MONEY%20TRANSFER%20LOGO.png" />
+            <Image url="@pic/MONEY%20TRANSFER%20LOGO.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="133.0" fitWidth="211.0" layoutX="1405.0" layoutY="558.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@HELP%20AND%20SUPPORT%20LOGO.png" />
+            <Image url="@pic/HELP%20AND%20SUPPORT%20LOGO.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="127.0" fitWidth="204.0" layoutX="1406.0" layoutY="398.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@TRANSACTION%20HISTORY%20LOGO.png" />
+            <Image url="@pic/TRANSACTION%20HISTORY%20LOGO.png" />
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00135e" height="40.0" layoutY="1052.0" stroke="#00135e" strokeType="INSIDE" width="1920.0" />
