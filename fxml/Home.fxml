@@ -12,7 +12,7 @@
    <children>
       <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
          <image>
-            <Image url="@NU%20BANK.png" />
+            <Image url="@pic/NU%20BANK.png" />
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00135e" height="1080.0" layoutX="1337.0" layoutY="7.0" opacity="0.5" stroke="#00135e" strokeType="INSIDE" width="583.0" />
@@ -64,38 +64,32 @@
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00135e" height="40.0" layoutY="1052.0" stroke="#00135e" strokeType="INSIDE" width="1920.0" />
-      <Label contentDisplay="CENTER" layoutX="1537.0" layoutY="40.0" text="NU" textFill="WHITE">
-         <font>
-            <Font name="SansSerif Bold" size="55.0" />
-         </font>
-      </Label>
-      <Label contentDisplay="CENTER" layoutX="1618.0" layoutY="40.0" text="LHUILLIER" textFill="#db3c26">
-         <font>
-            <Font name="SansSerif Bold" size="55.0" />
-         </font>
-      </Label>
-      <Label contentDisplay="CENTER" layoutX="1489.0" layoutY="94.0" text="Where your money moves." textFill="WHITE">
+      <ImageView fitHeight="327.0" fitWidth="602.0" layoutX="1428.0" layoutY="-88.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pic/WHITE%20NU%20LHUILLIER.png" />
+         </image>
+      </ImageView>
+      <Label contentDisplay="CENTER" layoutX="1479.0" layoutY="91.0" text="Where your money moves." textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="33.0" />
          </font>
       </Label>
-      <Rectangle arcHeight="40.0" arcWidth="40.0" fill="#00135e" height="445.0" layoutX="290.0" layoutY="375.0" stroke="#00135e" strokeType="OUTSIDE" width="730.0" />
-      <ImageView fitHeight="405.0" fitWidth="383.0" layoutX="663.0" layoutY="359.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="860.0" fitWidth="1405.0" layoutX="-28.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../OneDrive/Documents/GitHub/CCOBJPGL_PROJECT_COM246/Blippi/src/main/resources/com/example/images/blippilogo.png" />
+            <Image url="@pic/BANK%20CARD.png" />
          </image>
       </ImageView>
-      <Label fx:id="accnum" layoutX="320.0" layoutY="410.0" text="0001112224445556" textFill="WHITE">
+      <Label fx:id="accnum" layoutX="316.0" layoutY="480.0" text="0001112224445556" textFill="WHITE">
          <font>
             <Font name="Arial" size="35.0" />
          </font>
       </Label>
-      <Label layoutX="320.0" layoutY="450.0" text="Valid Until" textFill="WHITE">
+      <Label layoutX="320.0" layoutY="525.0" text="Valid Until" textFill="WHITE">
          <font>
             <Font name="Arial" size="19.0" />
          </font>
       </Label>
-      <Label fx:id="cardlabel" layoutX="320.0" layoutY="630.0" text="My Card" textFill="WHITE">
+      <Label fx:id="cardlabel" layoutX="320.0" layoutY="630.0" text="Juan Dela Cruz" textFill="WHITE">
          <font>
             <Font name="Arial" size="30.0" />
          </font>
@@ -110,7 +104,7 @@
             <Font name="Arial Bold" size="35.0" />
          </font>
       </Label>
-      <Label fx:id="expdate" layoutX="320.0" layoutY="475.0" text="2025-01-01" textFill="WHITE">
+      <Label fx:id="expdate" layoutX="320.0" layoutY="545.0" text="2030-01-01" textFill="WHITE">
          <font>
             <Font name="Arial" size="19.0" />
          </font>
