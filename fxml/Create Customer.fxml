@@ -45,7 +45,7 @@
                   <Font name="System Bold" size="22.0" />
                </font>
             </Button>
-            <TextField fx:id="numberField" layoutX="70.0" layoutY="110.0" prefHeight="66.0" prefWidth="694.0" style="-fx-background-radius: 50; -fx-font-size: 20;" text="   First Name, Last Name" />
+            <TextField fx:id="numberField" layoutX="70.0" layoutY="110.0" prefHeight="66.0" prefWidth="694.0" promptText="   First Name, Last Name" style="-fx-background-radius: 50; -fx-font-size: 20;" />
             <Label layoutX="100.0" layoutY="80.0" text="Customer Name" textFill="WHITE">
                <font>
                   <Font name="SansSerif Bold" size="22.0" />
@@ -56,18 +56,18 @@
                   <Font name="Arial" size="22.0" />
                </font>
             </Label>
-            <Button fx:id="signUpLink" alignment="CENTER" layoutX="476.0" layoutY="561.0" mnemonicParsing="false" onAction="#signUpLinkHandler" style="-fx-background-color: transparent;" text="Log in." textFill="WHITE">
+            <Button fx:id="signUpLink" alignment="CENTER" layoutX="476.0" layoutY="560.0" mnemonicParsing="false" onAction="#signUpLinkHandler" style="-fx-background-color: transparent;" text="Log in." textFill="WHITE">
                <font>
                   <Font name="Arial Bold" size="22.0" />
                </font>
             </Button>
-            <TextField fx:id="numberField1" layoutX="70.0" layoutY="230.0" prefHeight="66.0" prefWidth="694.0" style="-fx-background-radius: 50; -fx-font-size: 20;" text="   Create Username" />
+            <TextField fx:id="numberField1" layoutX="70.0" layoutY="230.0" prefHeight="66.0" prefWidth="694.0" promptText="   Create Username" style="-fx-background-radius: 50; -fx-font-size: 20;" />
             <Label layoutX="100.0" layoutY="200.0" text="Username" textFill="WHITE">
                <font>
                   <Font name="SansSerif Bold" size="22.0" />
                </font>
             </Label>
-            <TextField fx:id="numberField2" layoutX="70.0" layoutY="350.0" prefHeight="66.0" prefWidth="694.0" style="-fx-background-radius: 50; -fx-font-size: 20;" text="   Create 4-Digit PIN" />
+            <TextField fx:id="numberField2" layoutX="70.0" layoutY="350.0" prefHeight="66.0" prefWidth="694.0" promptText="   Create 4-Digit PIN" style="-fx-background-radius: 50; -fx-font-size: 20;" />
             <Label layoutX="100.0" layoutY="320.0" text="PIN" textFill="WHITE">
                <font>
                   <Font name="SansSerif Bold" size="22.0" />
