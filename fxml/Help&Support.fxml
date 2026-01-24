@@ -38,11 +38,31 @@
             <Font name="Arial Bold" size="34.0" />
          </font>
       </Button>
-      <Pane layoutX="265.0" layoutY="229.0" opacity="0.5" prefHeight="750.0" prefWidth="1450.0" style="-fx-background-color: #00135e; -fx-background-radius: 25;">
+      <Pane layoutX="255.0" layoutY="230.0" opacity="0.5" prefHeight="750.0" prefWidth="1460.0" style="-fx-background-color: #00135e; -fx-background-radius: 25; -fx-border-radius: 30; -fx-border-color: #d0a933; -fx-border-width: 10;">
          <children>
-            <Label contentDisplay="CENTER" layoutX="500.0" layoutY="40.0" text="Help and Support" textFill="WHITE">
+            <Label contentDisplay="CENTER" layoutX="500.0" layoutY="55.0" text="Help &amp; Support" textFill="WHITE">
                <font>
                   <Font name="Arial Bold" size="50.0" />
+               </font>
+            </Label>
+            <Label layoutX="50.0" layoutY="160.0" text="Welcome to Help &amp; Support! This section is here to guide you whenever you need help using the app." textFill="WHITE">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="50.0" layoutY="240.0" prefHeight="155.0" prefWidth="1395.0" text="You can find quick answers to common questions about logging in, checking your balance, sending or receiving money, paying bills, and updating your account details. Easy step-by-step guides are available to help you complete transactions smoothly." textFill="WHITE" wrapText="true">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="50.0" layoutY="420.0" prefHeight="155.0" prefWidth="1395.0" text="If you’re experiencing problems or need further assistance, you can contact our support team through the available hotline, email, or support form. Just let us know your concern, and we’ll do our best to help you as soon as possible." textFill="WHITE" wrapText="true">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="50.0" layoutY="617.0" text="We’re here to make your online banking experience simple, safe, and stress-free." textFill="WHITE" wrapText="true">
+               <font>
+                  <Font size="30.0" />
                </font>
             </Label>
          </children>
