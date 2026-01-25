@@ -1,14 +1,20 @@
 package com.bank.model;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class Transaction {
     private String transactionId;
     private String fromAccount;
     private String toAccount;
-    private int amount;
-    private Date transactionDate;
-    private String transactionType;
+    private double amount;
+    private LocalDateTime date;
 
-    // getters and setters
+    public Transaction(String transactionId, String fromAccount,
+                       String toAccount, double amount, LocalDateTime date) {
+        this.transactionId = transactionId;
+        this.fromAccount = fromAccount;
+        this.toAccount = toAccount;
+        this.amount = amount;
+        this.date = date;
+    }
 }

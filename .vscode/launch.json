@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Launch Main with JavaFX",
+      "request": "launch",
+      "mainClass": "com.bank.app.Main",
+      "vmArgs": "--module-path C:/javafx-sdk-21.0.10/lib --add-modules javafx.controls,javafx.fxml",
+      "projectName": "bank-backend"
+    }
+  ]
+}

@@ -1,87 +1,89 @@
 package com.bank.dao;
 
-import com.bank.db.DBConnection;
-import java.sql.*;   
+import com.bank.model.Customer;
+import com.bank.util.DBConnection;
+
+import java.sql.*;
 
 public class CustomerDAO {
 
-    // Add a new customer
-    public void addCustomer(String accountId, String name, String username, int pin) throws Exception {
-        String sql = "INSERT INTO customers (account_id, customer_name, username, pin) VALUES (?, ?, ?, ?)";
+    // CREATE CUSTOMER
+    public static Customer createCustomer(String name, String username, String pin) throws SQLException {
+        String getNextId = "SELECT COUNT(*) + 1 FROM customers";
+        String insertSQL = "INSERT INTO customers (customer_id, customer_name, username, pin) VALUES (?, ?, ?, ?)";
+
         try (Connection con = DBConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement(sql)) {
-             
-            ps.setString(1, accountId);
+             Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(getNextId)) {
+
+            rs.next();
+            String customerId = "C" + String.format("%02d", rs.getInt(1));
+
+            PreparedStatement ps = con.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, customerId);
             ps.setString(2, name);
             ps.setString(3, username);
-            ps.setInt(4, pin);
-
+            ps.setString(4, pin);
             ps.executeUpdate();
-            System.out.println("Customer added successfully.");
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+            ResultSet keys = ps.getGeneratedKeys();
+            keys.next();
+
+            return new Customer(
+                    keys.getInt(1),
+                    customerId,
+                    name,
+                    username,
+                    pin
+            );
         }
     }
 
-    // View all customers
-    public void viewCustomers() throws Exception{
-        String sql = "SELECT * FROM customers";
-        try (Connection con = DBConnection.getConnection();
-             Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
+    // LOGIN
+    public static Customer login(String username, String pin) throws SQLException {
+        String sql = "SELECT * FROM customers WHERE username = ? AND pin = ?";
 
-            System.out.println("Customers:");
-            while (rs.next()) {
-                System.out.println(
-                    rs.getString("account_id") + " | " +
-                    rs.getString("customer_name") + " | " +
-                    rs.getString("username") + " | " +
-                    rs.getInt("pin")
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, username);
+            ps.setString(2, pin);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Customer(
+                        rs.getInt("id"),
+                        rs.getString("customer_id"),
+                        rs.getString("customer_name"),
+                        rs.getString("username"),
+                        rs.getString("pin")
                 );
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+        return null;
     }
 
-    // Update an existing customer by account ID
-    public void updateCustomer(String accountId, String name, String username, int pin) throws Exception {
-        String sql = "UPDATE customers SET customer_name = ?, username = ?, pin = ? WHERE account_id = ?";
+    // UPDATE
+    public static void updateCredentials(String customerId, String username, String pin) throws SQLException {
+        String sql = "UPDATE customers SET username = ?, pin = ? WHERE customer_id = ?";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setString(1, name);
-            ps.setString(2, username);
-            ps.setInt(3, pin);
-            ps.setString(4, accountId);
-
-            int rows = ps.executeUpdate();
-            if (rows > 0) {
-                System.out.println("Customer updated successfully.");
-            } else {
-                System.out.println("No customer found with account ID: " + accountId);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            ps.setString(1, username);
+            ps.setString(2, pin);
+            ps.setString(3, customerId);
+            ps.executeUpdate();
         }
     }
 
-    // Delete a customer by account ID
-    public void deleteCustomer(String accountId) throws Exception {
-        String sql = "DELETE FROM customers WHERE account_id = ?";
+    // DELETE
+    public static void deleteCustomer(String customerId) throws SQLException {
+        String sql = "DELETE FROM customers WHERE customer_id = ?";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setString(1, accountId);
-
-            int rows = ps.executeUpdate();
-            if (rows > 0) {
-                System.out.println("Customer deleted successfully.");
-            } else {
-                System.out.println("No customer found with account ID: " + accountId);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            ps.setString(1, customerId);
+            ps.executeUpdate();
         }
     }
 }

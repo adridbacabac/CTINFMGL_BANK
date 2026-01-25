@@ -1,51 +1,44 @@
 package com.bank.dao;
 
-import com.bank.db.DBConnection;
+import com.bank.model.Account;
+import com.bank.util.DBConnection;
+
 import java.sql.*;
 
 public class AccountDAO {
 
-    // CREATE
-    public void addAccount(String id, String type, int balance, String status) throws Exception {
-        String sql = "INSERT INTO accounts VALUES (?, ?, ?, ?)";
-        Connection con = DBConnection.getConnection();
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setString(1, id);
-        ps.setString(2, type);
-        ps.setInt(3, balance);
-        ps.setString(4, status);
-        ps.executeUpdate();
-    }
+    public static Account createAccount(String customerId, String type) throws SQLException {
+        String countSQL = "SELECT COUNT(*) + 1 FROM accounts";
+        String insertSQL = """
+            INSERT INTO accounts (account_id, customer_id, account_type, balance, status)
+            VALUES (?, ?, ?, 0.0, 'ACTIVE')
+        """;
 
-    // READ
-    public void viewAccounts() throws Exception {
-        String sql = "SELECT * FROM accounts";
-        Connection con = DBConnection.getConnection();
-        Statement st = con.createStatement();
-        ResultSet rs = st.executeQuery(sql);
+        try (Connection con = DBConnection.getConnection();
+             Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(countSQL)) {
 
-        while (rs.next()) {
-            System.out.println(rs.getString("account_id") +
-                    " | " + rs.getInt("balance"));
+            rs.next();
+            String accountId = "A" + String.format("%02d", rs.getInt(1));
+
+            PreparedStatement ps = con.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, accountId);
+            ps.setString(2, customerId);
+            ps.setString(3, type);
+            ps.executeUpdate();
+
+            return new Account(0, accountId, customerId, type, 0.0, "ACTIVE");
         }
     }
 
-    // UPDATE
-    public void updateBalance(String accountId, int newBalance) throws Exception {
-        String sql = "UPDATE accounts SET balance=? WHERE account_id=?";
-        Connection con = DBConnection.getConnection();
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, newBalance);
-        ps.setString(2, accountId);
-        ps.executeUpdate();
-    }
+    public static void updateBalance(String accountId, double newBalance) throws SQLException {
+        String sql = "UPDATE accounts SET balance = ? WHERE account_id = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
 
-    // DELETE
-    public void deleteAccount(String accountId) throws Exception {
-        String sql = "DELETE FROM accounts WHERE account_id=?";
-        Connection con = DBConnection.getConnection();
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setString(1, accountId);
-        ps.executeUpdate();
+            ps.setDouble(1, newBalance);
+            ps.setString(2, accountId);
+            ps.executeUpdate();
+        }
     }
 }

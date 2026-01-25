@@ -1,46 +1,71 @@
 package com.bank.dao;
 
-import com.bank.db.DBConnection;
+import com.bank.model.Transaction;
+import com.bank.util.DBConnection;
+
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TransactionDAO {
 
-    public void transferMoney(
-            String fromAcc, String toAcc, int amount, String transId) throws Exception {
-
+    public static void transfer(String from, String to, double amount) throws SQLException {
         Connection con = DBConnection.getConnection();
         con.setAutoCommit(false);
 
         try {
-            // deduct
-            PreparedStatement deduct = con.prepareStatement(
-                    "UPDATE accounts SET balance = balance - ? WHERE account_id=?");
-            deduct.setInt(1, amount);
-            deduct.setString(2, fromAcc);
-            deduct.executeUpdate();
+            String getId = "SELECT COUNT(*) + 1 FROM transactions";
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(getId);
+            rs.next();
 
-            // add
-            PreparedStatement add = con.prepareStatement(
-                    "UPDATE accounts SET balance = balance + ? WHERE account_id=?");
-            add.setInt(1, amount);
-            add.setString(2, toAcc);
-            add.executeUpdate();
+            String tid = "T" + String.format("%02d", rs.getInt(1));
 
-            // insert transaction record
-            PreparedStatement trans = con.prepareStatement(
-                    "INSERT INTO transactions VALUES (?, ?, ?, ?, CURDATE(), 'online')");
-            trans.setString(1, transId);
-            trans.setString(2, fromAcc);
-            trans.setString(3, toAcc);
-            trans.setInt(4, amount);
-            trans.executeUpdate();
+            PreparedStatement ps = con.prepareStatement("""
+                INSERT INTO transactions (transaction_id, from_account, to_account, amount, transaction_date)
+                VALUES (?, ?, ?, ?, NOW())
+            """);
+
+            ps.setString(1, tid);
+            ps.setString(2, from);
+            ps.setString(3, to);
+            ps.setDouble(4, amount);
+            ps.executeUpdate();
 
             con.commit();
-            System.out.println("Transfer successful!");
-
         } catch (Exception e) {
             con.rollback();
-            System.out.println("Transfer failed. Rolled back.");
+            throw e;
         }
+    }
+
+    public static List<Transaction> getTransactions(String accountId) throws SQLException {
+        List<Transaction> list = new ArrayList<>();
+
+        String sql = """
+            SELECT * FROM transactions
+            WHERE from_account = ? OR to_account = ?
+            ORDER BY transaction_date DESC
+        """;
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, accountId);
+            ps.setString(2, accountId);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Transaction(
+                        rs.getString("transaction_id"),
+                        rs.getString("from_account"),
+                        rs.getString("to_account"),
+                        rs.getDouble("amount"),
+                        rs.getTimestamp("transaction_date").toLocalDateTime()
+                ));
+            }
+        }
+        return list;
     }
 }
