@@ -70,7 +70,7 @@
                <padding>
                   <Insets left="30.0" />
                </padding></TextField>
-            <Button fx:id="confirmButton" layoutX="878.0" layoutY="230.0" mnemonicParsing="false" onAction="#loginButtonHandler" prefHeight="63.0" prefWidth="221.0" style="-fx-background-color: #d0a933; -fx-background-radius: 50;" text="Confirm Update" textFill="#00135e">
+            <Button fx:id="confirmButton" layoutX="878.0" layoutY="230.0" mnemonicParsing="false" onAction="#handleUpdateUsername" prefHeight="63.0" prefWidth="221.0" style="-fx-background-color: #d0a933; -fx-background-radius: 50;" text="Confirm Update" textFill="#00135e">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
@@ -90,7 +90,7 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Button>
-            <Button fx:id="confirmButton2" layoutX="776.0" layoutY="330.0" mnemonicParsing="false" onAction="#loginButtonHandler" prefHeight="63.0" prefWidth="221.0" style="-fx-background-color: #d0a933; -fx-background-radius: 50;" text="Confirm Update" textFill="#00135e">
+            <Button fx:id="confirmButton2" layoutX="776.0" layoutY="330.0" mnemonicParsing="false" onAction="#handleUpdatePin" prefHeight="63.0" prefWidth="221.0" style="-fx-background-color: #d0a933; -fx-background-radius: 50;" text="Confirm Update" textFill="#00135e">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>

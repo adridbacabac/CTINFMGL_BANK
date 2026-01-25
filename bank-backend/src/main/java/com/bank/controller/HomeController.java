@@ -83,6 +83,8 @@ public class HomeController implements Initializable {
 
     @FXML
     private void handleProfileButtonAction(ActionEvent event) {
+        System.out.println("PROFILE BUTTON CLICKED"); // 👈 DEBUG
+
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/fxml/UpdateProfile.fxml")
@@ -103,9 +105,6 @@ public class HomeController implements Initializable {
             e.printStackTrace();
         }
     }
-
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

@@ -91,7 +91,7 @@
       </Label>
       <Label fx:id="customername" layoutX="305.0" layoutY="630.0" text="Juan Dela Cruz" textFill="WHITE">
          <font>
-            <Font name="Arial" size="30.0" />
+            <Font name="Arial Bold" size="40.0" />
          </font>
       </Label>
       <Label layoutX="305.0" layoutY="725.0" text="Available Balance as of" textFill="WHITE">

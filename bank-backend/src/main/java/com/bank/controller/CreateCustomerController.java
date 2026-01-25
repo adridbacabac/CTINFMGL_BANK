@@ -12,9 +12,11 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 
+import com.bank.controller.RegisterAccountController;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CreateCustomerController {
@@ -61,31 +63,76 @@ public class CreateCustomerController {
 
         String sql = "INSERT INTO customers (customer_name, username, pin) VALUES (?, ?, ?)";
 
+        String sql = """
+            INSERT INTO customers (customer_name, username, pin)
+            VALUES (?, ?, ?)
+        """;
+
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);
             pstmt.setString(2, username);
             pstmt.setString(3, pin);
             pstmt.executeUpdate();
-            
-            showAlert("Customer created successfully!");
-            clearFields();
+        }
 
-            // TODO: Navigate to RegisterAccount page here
-            // For example, load RegisterAccount.fxml and pass customer info
+        String fetchSql = """
+            SELECT customer_id
+            FROM customers
+            WHERE username = ?
+            ORDER BY id DESC
+            LIMIT 1
+        """;
 
-        } catch (SQLException e) {
+        try (PreparedStatement pstmt = conn.prepareStatement(fetchSql)) {
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                String customerId = rs.getString("customer_id"); // ✅ C011
+                showAlert("Customer created successfully!");
+                clearFields();
+                goToRegisterAccountPage(event, customerId); // 🔥 PASS C011
+            } else {
+                showAlert("Failed to retrieve customer ID.");
+            }
+        }
+
+        catch (SQLException e) {
             e.printStackTrace();
             showAlert("Failed to create customer: " + e.getMessage());
         }
+
+            }
+
+            
+            private void showAlert(String message) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Info");
+                alert.setHeaderText(null);
+                alert.setContentText(message);
+                alert.showAndWait();
+            }
+
+            private void goToRegisterAccountPage(ActionEvent event, String customerId) {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegisterAccount.fxml"));
+                    Parent root = loader.load();
+
+                    // Get controller of RegisterAccount and pass customerId
+                    RegisterAccountController controller = loader.getController();
+                    controller.setCustomerId(customerId);
+
+                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    stage.setScene(new Scene(root));
+                    stage.setTitle("Register Account");
+                    stage.show();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    showAlert("Failed to load Register Account page.");
+                }
     }
-    
-    private void showAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Info");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+
     
     @FXML
     private void goToLoginPage(ActionEvent event) {
