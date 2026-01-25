@@ -1,6 +1,8 @@
 package com.bank.controller;
 
 import com.bank.util.DBConnection;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -8,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafx.scene.Node;
 
 import java.io.IOException;
 import java.net.URL;
@@ -77,6 +80,32 @@ public class HomeController implements Initializable {
         this.customerId = customerId;
         loadAccountData();
     }
+
+    @FXML
+    private void handleProfileButtonAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/fxml/UpdateProfile.fxml")
+            );
+            Parent root = loader.load();
+
+            UpdateProfileController controller = loader.getController();
+            controller.setCustomerId(customerId); // ✅ PASS LOGGED-IN USER
+
+            Stage stage = (Stage) ((Node) event.getSource())
+                    .getScene()
+                    .getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Update Profile");
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

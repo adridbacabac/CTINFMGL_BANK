@@ -114,6 +114,6 @@
             <Font name="Arial Bold" size="35.0" />
          </font>
       </Label>
-      <Button layoutX="42.0" layoutY="44.0" mnemonicParsing="false" opacity="0.0" prefHeight="78.0" prefWidth="77.0" />
+      <Button fx:id="profile" layoutX="42.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleProfileButtonAction" opacity="0.0" prefHeight="78.0" prefWidth="77.0" />
    </children>
 </Pane>
