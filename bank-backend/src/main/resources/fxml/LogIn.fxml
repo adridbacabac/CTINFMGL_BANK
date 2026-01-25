@@ -41,7 +41,7 @@
          </children></AnchorPane>
       <AnchorPane layoutX="700.0" layoutY="358.0" prefHeight="641.0" prefWidth="529.0" style="-fx-background-color: #032a5b; -fx-opacity: 75%; -fx-background-radius: 40; -fx-border-color: #d0a933; -fx-border-radius: 30; -fx-border-width: 15;">
          <children>
-            <Button fx:id="loginButton" layoutX="70.0" layoutY="480.0" mnemonicParsing="false" onAction="#loginButtonHandler" prefHeight="75.0" prefWidth="390.0" style="-fx-background-color: #d0a933; -fx-background-radius: 50;" text="Log In" textFill="#00135e">
+            <Button fx:id="loginButton" layoutX="70.0" layoutY="450.0" mnemonicParsing="false" onAction="#loginButtonHandler" prefHeight="75.0" prefWidth="390.0" style="-fx-background-color: #d0a933; -fx-background-radius: 50;" text="Log In" textFill="#00135e">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
@@ -63,12 +63,12 @@
                   <Font name="SansSerif Regular" size="22.0" />
                </font>
             </Label>
-            <Label layoutX="80.0" layoutY="575.0" text="Don't have an account yet?" textFill="WHITE">
+            <Label layoutX="80.0" layoutY="550.0" text="Don't have an account yet?" textFill="WHITE">
                <font>
                   <Font name="Arial" size="22.0" />
                </font>
             </Label>
-            <Button fx:id="signUpLink" alignment="CENTER" layoutX="339.0" layoutY="569.0" mnemonicParsing="false" onAction="#signUpLinkHandler" style="-fx-background-color: transparent;" text="Sign Up." textFill="WHITE">
+            <Button fx:id="signUpLink" alignment="CENTER" layoutX="339.0" layoutY="543.0" mnemonicParsing="false" onAction="#signUpLinkHandler" style="-fx-background-color: transparent;" text="Sign Up." textFill="WHITE">
                <font>
                   <Font name="Arial Bold" size="22.0" />
                </font>
