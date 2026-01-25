@@ -8,11 +8,11 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.HomeController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bank.controller.ConfirmationPageController">
    <children>
       <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
          <image>
-            <Image url="@pic/NU%20BANK.png" />
+            <Image url="@../pic/NU%20BANK.png" />
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00135e" height="150.0" stroke="#00135e" strokeType="INSIDE" width="1920.0" />
@@ -20,7 +20,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00135e" height="40.0" layoutX="6.0" layoutY="1056.0" stroke="#00135e" strokeType="INSIDE" width="1920.0" />
       <ImageView fitHeight="327.0" fitWidth="602.0" layoutX="1428.0" layoutY="-88.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@pic/WHITE%20NU%20LHUILLIER.png" />
+            <Image url="@../pic/WHITE%20NU%20LHUILLIER.png" />
          </image>
       </ImageView>
       <Label contentDisplay="CENTER" layoutX="1479.0" layoutY="91.0" text="Where your money moves." textFill="WHITE">
@@ -30,10 +30,10 @@
       </Label>
       <ImageView fitHeight="90.0" fitWidth="150.0" layoutX="14.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@pic/BACK%20BUTTON%20LOGO.png" />
+            <Image url="@../pic/BACK%20BUTTON%20LOGO.png" />
          </image>
       </ImageView>
-      <Button layoutX="38.0" layoutY="49.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="282.0" style="-fx-background-color: transparent;" text="Back" textFill="WHITE">
+      <Button fx:id="backButton" layoutX="38.0" layoutY="49.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="282.0" style="-fx-background-color: transparent;" text="Back" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="34.0" />
          </font>
@@ -55,7 +55,7 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <Button layoutX="600.0" layoutY="630.0" mnemonicParsing="false" prefHeight="94.0" prefWidth="338.0" style="-fx-background-radius: 30;" text="Cancel" textFill="#00135e">
+            <Button fx:id="cancelButton" layoutX="600.0" layoutY="630.0" mnemonicParsing="false" prefHeight="94.0" prefWidth="338.0" style="-fx-background-radius: 30;" text="Cancel" textFill="#00135e">
                <font>
                   <Font size="30.0" />
                </font>
@@ -75,7 +75,7 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <Button layoutX="200.0" layoutY="630.0" mnemonicParsing="false" prefHeight="94.0" prefWidth="338.0" style="-fx-background-radius: 30;" text="Send  Money" textFill="#00135e">
+            <Button fx:id="sendmoneyButton" layoutX="200.0" layoutY="630.0" mnemonicParsing="false" prefHeight="94.0" prefWidth="338.0" style="-fx-background-radius: 30;" text="Send  Money" textFill="#00135e">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
