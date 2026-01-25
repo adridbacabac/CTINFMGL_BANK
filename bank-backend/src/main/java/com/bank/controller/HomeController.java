@@ -19,7 +19,7 @@ public class HomeController implements Initializable {
     // ===== LABELS FROM FXML =====
     @FXML private Label usernamelabel;     // "Hello, <name>"
     @FXML private Label accnum;            // account_id
-    @FXML private Label custoomername;     // customer_name
+    @FXML private Label customername;     // customer_name
     @FXML private Label baldate;           // current date
     @FXML private Label balanceamt;        // balance
 
@@ -95,7 +95,7 @@ public class HomeController implements Initializable {
 
                 // ===== UPDATE UI =====
                 usernamelabel.setText(customerName);
-                custoomername.setText(customerName);
+                customername.setText(customerName);
                 accnum.setText(accountId);
                 balanceamt.setText(String.format("%.2f", balance));
             }

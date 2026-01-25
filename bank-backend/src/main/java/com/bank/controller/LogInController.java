@@ -72,18 +72,13 @@ public class LogInController {
 
     private void goToHome(ActionEvent event, String customerId) {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/fxml/Home.fxml")
-            );
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Home.fxml"));
             Parent root = loader.load();
 
             HomeController controller = loader.getController();
-            controller.setCustomerId(customerId);
+            controller.setCustomerId(customerId);  // use the parameter here!
 
-            Stage stage = (Stage) ((Node) event.getSource())
-                    .getScene()
-                    .getWindow();
-
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Home");
             stage.show();
@@ -93,6 +88,7 @@ public class LogInController {
             showAlert("Failed to load home page.");
         }
     }
+
 
     @FXML
     private void signUpLinkHandler(ActionEvent event) {

@@ -19,7 +19,7 @@ public class HelpSupportController {
     private void handleBackButtonAction(ActionEvent event) {
         try {
             // Load the Home.fxml file
-            Parent homeRoot = FXMLLoader.load(getClass().getResource("/com/bank/view/Home.fxml"));
+            Parent homeRoot = FXMLLoader.load(getClass().getResource("/fxml/Home.fxml"));
 
             // Get the current stage
             Stage stage = (Stage) backButton.getScene().getWindow();
