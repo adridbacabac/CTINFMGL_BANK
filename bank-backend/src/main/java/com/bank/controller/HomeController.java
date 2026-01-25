@@ -53,6 +53,7 @@ public class HomeController implements Initializable {
      * CALLED FROM LoginController AFTER SUCCESSFUL LOGIN
      */
     public void setCustomerId(String customerId) {
+        System.out.println("setCustomerId called with: " + customerId);
         this.customerId = customerId;
         loadAccountData();
     }
@@ -76,15 +77,16 @@ public class HomeController implements Initializable {
      * LOAD USER DATA FROM DATABASE
      */
     private void loadAccountData() {
+        System.out.println("Loading data for customerId: " + customerId);
 
         String sql = """
-                SELECT customer_name, account_id, balance
-                FROM customers
-                WHERE customer_id = ?
+                SELECT c.customer_name, a.account_id, a.balance
+                FROM customers c
+                JOIN accounts a ON c.customer_id = a.customer_id
+                WHERE c.customer_id = ?
                 """;
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
             pstmt.setString(1, customerId);
             ResultSet rs = pstmt.executeQuery();
 
@@ -93,13 +95,17 @@ public class HomeController implements Initializable {
                 String accountId = rs.getString("account_id");
                 double balance = rs.getDouble("balance");
 
-                // ===== UPDATE UI =====
+                System.out.println("Fetched from DB - customerName: " + customerName +
+                                ", accountId: " + accountId + ", balance: " + balance);
+
+                // Update UI labels
                 usernamelabel.setText(customerName);
                 customername.setText(customerName);
                 accnum.setText(accountId);
                 balanceamt.setText(String.format("%.2f", balance));
+            } else {
+                System.out.println("No record found for customerId: " + customerId);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }

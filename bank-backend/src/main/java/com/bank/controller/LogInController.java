@@ -75,12 +75,11 @@ public class LogInController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Home.fxml"));
             Parent root = loader.load();
 
-            HomeController controller = loader.getController();
-            controller.setCustomerId(customerId);  // use the parameter here!
+            HomeController homeController = loader.getController();
+            homeController.setCustomerId(customerId); // Must be after load()
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.setTitle("Home");
             stage.show();
 
         } catch (IOException e) {
