@@ -76,7 +76,7 @@
       </Label>
       <ImageView fx:id="accounttype" fitHeight="860.0" fitWidth="1405.0" layoutX="-28.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../../../../Downloads/BANK%20CARD.png" />
+            <Image url="@../pic/BANK%20CARD.png" />
          </image>
       </ImageView>
       <Label fx:id="accnum" layoutX="305.0" layoutY="498.0" text="A001" textFill="WHITE">

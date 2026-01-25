@@ -2,9 +2,14 @@ package com.bank.controller;
 
 import com.bank.util.DBConnection;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,8 +36,23 @@ public class HomeController implements Initializable {
     // Handler for HELP & SUPPORT button
     @FXML
     private void blippitransacHandler() {
-        System.out.println("Help & Support clicked");
-        // TODO: add actual code
+        try {
+            // Load HelpSupport.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/HelpSupport.fxml"));
+            Parent helpSupportRoot = loader.load();
+
+            // Get current stage from any node (for example, from usernamelabel)
+            Stage stage = (Stage) usernamelabel.getScene().getWindow();
+
+            // Set the scene to HelpSupport view
+            stage.setScene(new Scene(helpSupportRoot));
+            stage.setTitle("Help & Support");
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Failed to load Help & Support page.");
+        }
     }
 
     // Handler for TRANSFER MONEY button

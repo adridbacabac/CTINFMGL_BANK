@@ -79,37 +79,37 @@
             <Image url="@../pic/BANK%20CARD.png" />
          </image>
       </ImageView>
-      <Label fx:id="accnum" layoutX="316.0" layoutY="498.0" text="A00000" textFill="WHITE">
+      <Label fx:id="accnum" layoutX="305.0" layoutY="498.0" text="A001" textFill="WHITE">
          <font>
             <Font name="Arial" size="35.0" />
          </font>
       </Label>
-      <Label fx:id="cardlabel" layoutX="320.0" layoutY="543.0" prefHeight="22.0" prefWidth="97.0" text="Account ID" textFill="WHITE">
+      <Label fx:id="cardlabel" layoutX="305.0" layoutY="543.0" prefHeight="22.0" prefWidth="97.0" text="Account ID" textFill="WHITE">
          <font>
             <Font name="Arial" size="19.0" />
          </font>
       </Label>
-      <Label fx:id="customername" layoutX="320.0" layoutY="630.0" text="Juan Dela Cruz" textFill="WHITE">
+      <Label fx:id="customername" layoutX="305.0" layoutY="630.0" text="Juan Dela Cruz" textFill="WHITE">
          <font>
             <Font name="Arial" size="30.0" />
          </font>
       </Label>
-      <Label layoutX="320.0" layoutY="725.0" text="Available Balance as of" textFill="WHITE">
+      <Label layoutX="305.0" layoutY="725.0" text="Available Balance as of" textFill="WHITE">
          <font>
             <Font name="Arial" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="320.0" layoutY="750.0" text="₱" textFill="WHITE">
+      <Label layoutX="305.0" layoutY="750.0" text="₱" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="35.0" />
          </font>
       </Label>
-      <Label fx:id="baldate" layoutX="517.0" layoutY="725.0" text="May 29, 2025" textFill="WHITE">
+      <Label fx:id="baldate" layoutX="502.0" layoutY="725.0" text="May 29, 2025" textFill="WHITE">
          <font>
             <Font name="Arial" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="balanceamt" layoutX="347.0" layoutY="750.0" text="120.00" textFill="WHITE">
+      <Label fx:id="balanceamt" layoutX="332.0" layoutY="750.0" text="120.00" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="35.0" />
          </font>
