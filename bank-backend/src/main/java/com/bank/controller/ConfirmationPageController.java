@@ -111,42 +111,60 @@ public class ConfirmationPageController {
         stage.show();
     }
 
-    @FXML
+   @FXML
     private void handleSendMoney(ActionEvent event) {
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS)) {
             conn.setAutoCommit(false);
 
-            // Get sender's account ID
+            // 1️⃣ Get sender account ID
             String senderAccountId = getSenderAccountId(conn, customerId);
             if (senderAccountId == null) {
                 showAlert("Error", "Sender account not found.");
                 return;
             }
 
-            // Check balance
+            // 2️⃣ Check balance
             double senderBalance = getBalance(conn, senderAccountId);
             if (senderBalance < amount) {
                 showAlert("Insufficient Balance", "Not enough funds.");
                 return;
             }
 
-            // Check recipient account exists
+            // 3️⃣ Check recipient
             if (!accountExists(conn, recipientId)) {
                 showAlert("Error", "Recipient account does not exist.");
                 return;
             }
 
-            // Update balances
+            // 4️⃣ Update balances
             updateBalance(conn, senderAccountId, -amount);
             updateBalance(conn, recipientId, amount);
 
+            // 5️⃣ Insert transaction + get ID
+            String transactionId =
+                    insertTransaction(conn, senderAccountId, recipientId, amount);
+
             conn.commit();
 
-            // Proceed to receipt page
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TransactionReceipt.fxml"));
+            // 6️⃣ Load receipt page
+            FXMLLoader loader =
+                    new FXMLLoader(getClass().getResource("/fxml/TransactionReceipt.fxml"));
             Parent root = loader.load();
 
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            TransactionReceiptController controller = loader.getController();
+            controller.setReceiptData(
+                    fetchRecipientName(conn, recipientId), // recipient name
+                    recipientId,
+                    senderAccountId,
+                    amount,
+                    transactionId,
+                    java.time.LocalDateTime.now()
+            );
+
+            // 7️⃣ Show receipt
+            Stage stage = (Stage) ((Node) event.getSource())
+                    .getScene()
+                    .getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Transaction Receipt");
             stage.show();
@@ -155,6 +173,48 @@ public class ConfirmationPageController {
             e.printStackTrace();
             showAlert("Transaction Failed", e.getMessage());
         }
+    }
+
+
+    @FXML
+    private String insertTransaction(Connection conn,
+                                    String fromAccount,
+                                    String toAccount,
+                                    double amount) throws Exception {
+
+        String sql = """
+            INSERT INTO transactions (from_account, to_account, amount, transaction_date)
+            VALUES (?, ?, ?, NOW())
+        """;
+
+        try (PreparedStatement ps =
+                    conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+
+            ps.setString(1, fromAccount);
+            ps.setString(2, toAccount);
+            ps.setDouble(3, amount);
+            ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getString(1); // transaction_id (T00X)
+            }
+        }
+        throw new Exception("Transaction ID not generated.");
+    }
+    private String fetchRecipientName(Connection conn, String accountId) throws Exception {
+        String sql = "SELECT c.customer_name FROM customers c " +
+                     "JOIN accounts a ON c.customer_id = a.customer_id " +
+                     "WHERE a.account_id = ?";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, accountId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("customer_name");
+            }
+        }
+        return "Unknown Recipient";
     }
 
     private String getSenderAccountId(Connection conn, String customerId) throws Exception {
