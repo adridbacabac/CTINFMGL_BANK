@@ -1,35 +1,43 @@
 package com.bank.controller;
 
-import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import javafx.scene.Node;
 
 public class HelpSupportController {
 
-    @FXML
-    private Button backButton;
+    private String customerId;
+
+    // 🔥 receive logged-in user
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
 
     @FXML
     private void handleBackButtonAction(ActionEvent event) {
         try {
-            // Load the Home.fxml file
-            Parent homeRoot = FXMLLoader.load(getClass().getResource("/fxml/Home.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/fxml/Home.fxml")
+            );
+            Parent root = loader.load();
 
-            // Get the current stage
-            Stage stage = (Stage) backButton.getScene().getWindow();
+            // 🔥 pass customerId back to Home
+            HomeController controller = loader.getController();
+            controller.setCustomerId(customerId);
 
-            // Set the new scene
-            Scene scene = new Scene(homeRoot);
-            stage.setScene(scene);
+            Stage stage = (Stage) ((Node) event.getSource())
+                    .getScene()
+                    .getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Home");
             stage.show();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

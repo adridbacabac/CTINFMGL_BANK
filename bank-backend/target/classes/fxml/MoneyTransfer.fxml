@@ -35,7 +35,7 @@
             <Image url="@../pic/BACK%20BUTTON%20LOGO.png" />
          </image>
       </ImageView>
-      <Button fx:id="backButton" layoutX="38.0" layoutY="49.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="282.0" style="-fx-background-color: transparent;" text="Back" textFill="WHITE">
+      <Button fx:id="backButton" layoutX="38.0" layoutY="49.0" mnemonicParsing="false" onAction="#handleBackButtonAction" prefHeight="75.0" prefWidth="282.0" style="-fx-background-color: transparent;" text="Back" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="34.0" />
          </font>
@@ -47,7 +47,7 @@
                   <Font name="Arial Bold" size="55.0" />
                </font>
             </Label>
-            <TextField fx:id="amountField" layoutX="225.0" layoutY="170.0" prefHeight="100.0" prefWidth="690.0" promptText="10,000" style="-fx-background-radius: 30;">
+            <TextField fx:id="amountField" layoutX="225.0" layoutY="170.0" prefHeight="100.0" prefWidth="690.0" promptText="00.00" style="-fx-background-radius: 30;">
                <font>
                   <Font name="Arial" size="30.0" />
                </font>
@@ -66,7 +66,7 @@
                   <Insets left="30.0" />
                </padding>
             </TextField>
-            <TextField fx:id="accountidField" layoutX="225.0" layoutY="490.0" prefHeight="100.0" prefWidth="690.0" promptText="A0XX" style="-fx-background-radius: 30;">
+            <TextField fx:id="accountidField" layoutX="225.0" layoutY="490.0" prefHeight="100.0" prefWidth="690.0" promptText="A000" style="-fx-background-radius: 30;">
                <font>
                   <Font size="30.0" />
                </font>

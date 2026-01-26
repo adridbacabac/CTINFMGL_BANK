@@ -79,7 +79,7 @@
             <Image url="@../pic/BANK%20CARD.png" />
          </image>
       </ImageView>
-      <Label fx:id="accnum" layoutX="305.0" layoutY="498.0" text="A001" textFill="WHITE">
+      <Label fx:id="accnum" layoutX="305.0" layoutY="498.0" text="A000" textFill="WHITE">
          <font>
             <Font name="Arial" size="35.0" />
          </font>
@@ -109,7 +109,7 @@
             <Font name="Arial" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="balanceamt" layoutX="332.0" layoutY="750.0" text="120.00" textFill="WHITE">
+      <Label fx:id="balanceamt" layoutX="332.0" layoutY="750.0" text="00.00" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="35.0" />
          </font>

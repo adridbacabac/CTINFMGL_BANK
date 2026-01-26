@@ -38,32 +38,57 @@ public class HomeController implements Initializable {
 
     // Handler for HELP & SUPPORT button
     @FXML
-    private void blippitransacHandler() {
+    private void blippitransacHandler(ActionEvent event) {
         try {
-            // Load HelpSupport.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/HelpSupport.fxml"));
-            Parent helpSupportRoot = loader.load();
+            FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/fxml/HelpSupport.fxml")
+            );
+            Parent root = loader.load();
 
-            // Get current stage from any node (for example, from usernamelabel)
-            Stage stage = (Stage) usernamelabel.getScene().getWindow();
+            HelpSupportController controller = loader.getController();
+            controller.setCustomerId(customerId);
 
-            // Set the scene to HelpSupport view
-            stage.setScene(new Scene(helpSupportRoot));
+            Stage stage = (Stage) ((Node) event.getSource())
+                    .getScene()
+                    .getWindow();
+            stage.setScene(new Scene(root));
             stage.setTitle("Help & Support");
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    // Handler for TRANSFER MONEY button
+    @FXML
+    private void blippitixHandler(ActionEvent event) {
+        System.out.println("Transfer Money clicked");
+
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/fxml/MoneyTransfer.fxml")
+            );
+            Parent root = loader.load();
+
+            // 🔥 pass logged-in customerId
+            MoneyTransferController controller = loader.getController();
+            controller.setCustomerId(customerId);
+
+            Stage stage = (Stage) ((Node) event.getSource())
+                    .getScene()
+                    .getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Transfer Money");
             stage.show();
 
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Failed to load Help & Support page.");
+            System.out.println("Failed to load Transfer Money page.");
         }
     }
 
-    // Handler for TRANSFER MONEY button
-    @FXML
-    private void blippitixHandler() {
-        System.out.println("Transfer Money clicked");
-        // TODO: add actual code
-    }
 
     // Handler for TRANSACTION HISTORY button
     @FXML

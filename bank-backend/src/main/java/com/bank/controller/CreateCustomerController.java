@@ -12,7 +12,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 
-import com.bank.controller.RegisterAccountController;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -63,17 +62,17 @@ public class CreateCustomerController {
 
         String sql = "INSERT INTO customers (customer_name, username, pin) VALUES (?, ?, ?)";
 
-        String sql = """
-            INSERT INTO customers (customer_name, username, pin)
-            VALUES (?, ?, ?)
-        """;
-
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);
             pstmt.setString(2, username);
             pstmt.setString(3, pin);
             pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Failed to create customer: " + e.getMessage());
         }
+
 
         String fetchSql = """
             SELECT customer_id

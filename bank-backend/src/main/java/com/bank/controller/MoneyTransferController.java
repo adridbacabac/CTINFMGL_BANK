@@ -27,13 +27,59 @@ public class MoneyTransferController {
     @FXML
     private TextField accountidField;
 
-    // TEMP: replace with logged-in user later
-    private final String senderAccountId = "A001";
+    private String customerId;       // logged-in user
+    private String senderAccountId;  // resolved from DB
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+        System.out.println("MoneyTransfer customerId: " + customerId);
+    }
+
+    private void loadSenderAccountId(Connection conn) throws Exception {
+        String sql = "SELECT account_id FROM accounts WHERE customer_id = ?";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, customerId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                senderAccountId = rs.getString("account_id");
+                System.out.println("Sender account: " + senderAccountId);
+            } else {
+                throw new Exception("Sender account not found");
+            }
+        }
+    }
+
+    @FXML
+    private void handleBackButtonAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/fxml/Home.fxml")
+            );
+            Parent root = loader.load();
+
+            // 🔥 PASS customerId back to HomeController
+            HomeController controller = loader.getController();
+            controller.setCustomerId(customerId);
+
+            Stage stage = (Stage) ((Node) event.getSource())
+                    .getScene()
+                    .getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Home");
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     // DATABASE CONFIG
     private static final String DB_URL = "jdbc:mysql://localhost:3306/bankdb";
     private static final String DB_USER = "root";
-    private static final String DB_PASS = "";
+    private static final String DB_PASS = "Mm1114!";
 
     // BACK → /fxml/Home.fxml
     @FXML
@@ -63,20 +109,20 @@ public class MoneyTransferController {
 
             conn.setAutoCommit(false);
 
-            // CHECK SENDER BALANCE
+            // 🔥 LOAD sender account using customerId
+            loadSenderAccountId(conn);
+
             double senderBalance = getBalance(conn, senderAccountId);
             if (senderBalance < amount) {
                 showAlert("Insufficient Balance", "Not enough balance.");
                 return;
             }
 
-            // CHECK RECIPIENT
             if (!accountExists(conn, recipientId)) {
                 showAlert("Account Not Found", "Recipient does not exist.");
                 return;
             }
 
-            // UPDATE BALANCES
             updateBalance(conn, senderAccountId, -amount);
             updateBalance(conn, recipientId, amount);
 
@@ -86,9 +132,10 @@ public class MoneyTransferController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert("Transaction Failed", "An error occurred.");
+            showAlert("Transaction Failed", e.getMessage());
         }
     }
+
 
     // ================== DATABASE HELPERS ==================
 

@@ -46,13 +46,28 @@ public class UpdateProfileController {
     }
 
     @FXML
-    private void handleBack(ActionEvent event) throws IOException {
-        // Load the previous scene (e.g. Home)
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Home.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
+    private void handleBack(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/fxml/Home.fxml")
+            );
+            Parent root = loader.load();
+
+            HomeController controller = loader.getController();
+            controller.setCustomerId(customerId); // 🔥 KEEP SESSION
+
+            Stage stage = (Stage) ((Node) event.getSource())
+                    .getScene()
+                    .getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Home");
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 
     @FXML
     private void loginButtonHandler(ActionEvent event) {
