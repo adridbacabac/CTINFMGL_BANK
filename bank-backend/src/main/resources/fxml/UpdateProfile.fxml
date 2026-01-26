@@ -85,7 +85,7 @@
                   <Font name="Arial Rounded MT Bold" size="35.0" />
                </font>
             </Label>
-            <Button fx:id="deleteButton" layoutX="1013.0" layoutY="614.0" mnemonicParsing="false" onAction="#loginButtonHandler" prefHeight="75.0" prefWidth="210.0" style="-fx-background-color: #db0000; -fx-background-radius: 80;" text="Delete Account" textFill="WHITE">
+            <Button fx:id="deleteButton" layoutX="1013.0" layoutY="630.0" mnemonicParsing="false" onAction="#loginButtonHandler" prefHeight="75.0" prefWidth="210.0" style="-fx-background-color: #db0000; -fx-background-radius: 80;" text="Delete Account" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -93,6 +93,11 @@
             <Button fx:id="confirmButton2" layoutX="776.0" layoutY="330.0" mnemonicParsing="false" onAction="#handleUpdatePin" prefHeight="63.0" prefWidth="221.0" style="-fx-background-color: #d0a933; -fx-background-radius: 50;" text="Confirm Update" textFill="#00135e">
                <font>
                   <Font name="System Bold" size="22.0" />
+               </font>
+            </Button>
+            <Button fx:id="logoutButton" layoutX="780.0" layoutY="630.0" mnemonicParsing="false" onAction="#logoutButtonHandler" prefHeight="75.0" prefWidth="210.0" style="-fx-background-color: white; -fx-background-radius: 80;" text="Log Out" textFill="#00135e">
+               <font>
+                  <Font name="System Bold" size="20.0" />
                </font>
             </Button>
          </children>
