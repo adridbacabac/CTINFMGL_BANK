@@ -33,7 +33,7 @@
             <Image url="@../pic/BACK%20BUTTON%20LOGO.png" />
          </image>
       </ImageView>
-      <Button fx:id="backButton" layoutX="38.0" layoutY="49.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="282.0" style="-fx-background-color: transparent;" text="Back" textFill="WHITE">
+      <Button fx:id="backButton" layoutX="38.0" layoutY="49.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="75.0" prefWidth="282.0" style="-fx-background-color: transparent;" text="Back" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="34.0" />
          </font>
@@ -60,7 +60,7 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <Button fx:id="doneButton" layoutX="390.0" layoutY="654.0" mnemonicParsing="false" prefHeight="94.0" prefWidth="338.0" style="-fx-background-radius: 30;" text="Done" textFill="#00135e">
+            <Button fx:id="doneButton" layoutX="390.0" layoutY="654.0" mnemonicParsing="false" onAction="#handleDoneButton" prefHeight="94.0" prefWidth="338.0" style="-fx-background-radius: 30;" text="Done" textFill="#00135e">
                <font>
                   <Font size="30.0" />
                </font>
@@ -80,22 +80,22 @@
                   <Font name="System Bold" size="30.0" />
                </font>
             </Label>
-            <Label alignment="CENTER_RIGHT" layoutX="620.0" layoutY="300.0" prefHeight="50.0" prefWidth="418.0" text="A001" textFill="WHITE" wrapText="true">
+            <Label fx:id="recipientAccID" alignment="CENTER_RIGHT" layoutX="620.0" layoutY="300.0" prefHeight="50.0" prefWidth="418.0" text="A001" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
             </Label>
-            <Label alignment="CENTER_RIGHT" layoutX="620.0" layoutY="370.0" prefHeight="50.0" prefWidth="418.0" text="A020" textFill="WHITE" wrapText="true">
+            <Label fx:id="senderAccID" alignment="CENTER_RIGHT" layoutX="620.0" layoutY="370.0" prefHeight="50.0" prefWidth="418.0" text="A020" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="747.0" layoutY="440.0" prefHeight="58.0" prefWidth="291.0" text="10,000" textFill="WHITE" wrapText="true">
+            <Label fx:id="totalAmt" alignment="CENTER" layoutX="846.0" layoutY="440.0" prefHeight="58.0" prefWidth="194.0" text="0000.00" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="System Bold Italic" size="40.0" />
                </font>
             </Label>
-            <Label layoutX="700.0" layoutY="440.0" prefHeight="58.0" prefWidth="30.0" text="₱" textFill="WHITE" wrapText="true">
+            <Label layoutX="755.0" layoutY="440.0" prefHeight="58.0" prefWidth="30.0" text="₱" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="System Bold" size="40.0" />
                </font>
@@ -110,12 +110,12 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label alignment="CENTER_RIGHT" layoutX="865.0" layoutY="510.0" prefHeight="50.0" prefWidth="173.0" text="T001" textFill="WHITE" wrapText="true">
+            <Label fx:id="transacID" alignment="CENTER_RIGHT" layoutX="865.0" layoutY="510.0" prefHeight="50.0" prefWidth="173.0" text="T001" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
             </Label>
-            <Label alignment="CENTER_RIGHT" layoutX="715.0" layoutY="580.0" prefHeight="50.0" prefWidth="330.0" text="January 24, 2025" textFill="WHITE" wrapText="true">
+            <Label fx:id="transacDate" alignment="CENTER_RIGHT" layoutX="715.0" layoutY="580.0" prefHeight="50.0" prefWidth="330.0" text="January 24, 2025" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>

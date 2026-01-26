@@ -64,17 +64,15 @@ public class HomeController implements Initializable {
     // Handler for TRANSFER MONEY button
     @FXML
     private void blippitixHandler(ActionEvent event) {
-        System.out.println("Transfer Money clicked");
-
+        System.out.println("Transfer Money button clicked!");
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/fxml/MoneyTransfer.fxml")
             );
             Parent root = loader.load();
 
-            // 🔥 pass logged-in customerId
             MoneyTransferController controller = loader.getController();
-            controller.setCustomerId(customerId);
+            controller.setCustomerId(customerId); // 🔥 PASS LOGGED-IN USER
 
             Stage stage = (Stage) ((Node) event.getSource())
                     .getScene()
@@ -85,9 +83,9 @@ public class HomeController implements Initializable {
 
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Failed to load Transfer Money page.");
         }
     }
+
 
 
     // Handler for TRANSACTION HISTORY button

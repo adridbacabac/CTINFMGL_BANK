@@ -55,7 +55,7 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <Button fx:id="cancelButton" layoutX="600.0" layoutY="630.0" mnemonicParsing="false" prefHeight="94.0" prefWidth="338.0" style="-fx-background-radius: 30;" text="Cancel" textFill="#00135e">
+            <Button fx:id="cancelButton" layoutX="600.0" layoutY="630.0" mnemonicParsing="false" onAction="#handleCancelButton" prefHeight="94.0" prefWidth="338.0" style="-fx-background-radius: 30;" text="Cancel" textFill="#00135e">
                <font>
                   <Font size="30.0" />
                </font>
@@ -75,32 +75,32 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <Button fx:id="sendmoneyButton" layoutX="200.0" layoutY="630.0" mnemonicParsing="false" prefHeight="94.0" prefWidth="338.0" style="-fx-background-radius: 30;" text="Send  Money" textFill="#00135e">
+            <Button fx:id="sendmoneyButton" layoutX="200.0" layoutY="630.0" mnemonicParsing="false" onAction="#handleSendMoney" prefHeight="94.0" prefWidth="338.0" style="-fx-background-radius: 30;" text="Send  Money" textFill="#00135e">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
             </Button>
-            <Label alignment="CENTER_RIGHT" layoutX="620.0" layoutY="230.0" prefHeight="50.0" prefWidth="418.0" text="Yvonne Villavicencio" textFill="WHITE" wrapText="true">
+            <Label fx:id="recipient" alignment="CENTER_RIGHT" layoutX="620.0" layoutY="230.0" prefHeight="50.0" prefWidth="418.0" text="Yvonne Villavicencio" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
             </Label>
-            <Label alignment="CENTER_RIGHT" layoutX="620.0" layoutY="300.0" prefHeight="50.0" prefWidth="418.0" text="A002" textFill="WHITE" wrapText="true">
+            <Label fx:id="recipientAccID" alignment="CENTER_RIGHT" layoutX="620.0" layoutY="300.0" prefHeight="50.0" prefWidth="418.0" text="A002" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
             </Label>
-            <Label alignment="CENTER_RIGHT" layoutX="620.0" layoutY="370.0" prefHeight="50.0" prefWidth="418.0" text="A001" textFill="WHITE" wrapText="true">
+            <Label fx:id="senderAccID" alignment="CENTER_RIGHT" layoutX="620.0" layoutY="370.0" prefHeight="50.0" prefWidth="418.0" text="A001" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="658.0" layoutY="507.0" prefHeight="58.0" prefWidth="380.0" text="10,000" textFill="WHITE" wrapText="true">
+            <Label fx:id="totalTransferred" alignment="CENTER" layoutX="861.0" layoutY="507.0" prefHeight="58.0" prefWidth="225.0" text="60000" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="System Bold Italic" size="40.0" />
                </font>
             </Label>
-            <Label layoutX="620.0" layoutY="508.0" prefHeight="58.0" prefWidth="30.0" text="₱" textFill="WHITE" wrapText="true">
+            <Label layoutX="741.0" layoutY="508.0" prefHeight="58.0" prefWidth="30.0" text="₱" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="System Bold" size="40.0" />
                </font>
