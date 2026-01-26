@@ -15,7 +15,7 @@
             <Image url="@../pic/NU%20BANK.png" />
          </image>
       </ImageView>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00135e" height="150.0" stroke="#00135e" strokeType="INSIDE" width="1920.0" />
+      <Rectangle fx:id="r" arcHeight="5.0" arcWidth="5.0" fill="#00135e" height="150.0" stroke="#00135e" strokeType="INSIDE" width="1920.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d0a933" height="25.0" stroke="#00135e" strokeType="INSIDE" width="1920.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00135e" height="40.0" layoutX="6.0" layoutY="1056.0" stroke="#00135e" strokeType="INSIDE" width="1920.0" />
       <ImageView fitHeight="327.0" fitWidth="602.0" layoutX="1428.0" layoutY="-88.0" pickOnBounds="true" preserveRatio="true">
@@ -75,27 +75,27 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label alignment="CENTER_RIGHT" layoutX="620.0" layoutY="230.0" prefHeight="50.0" prefWidth="418.0" text="Yvonne Villavicencio" textFill="WHITE" wrapText="true">
+            <Label fx:id="recipientActID" alignment="CENTER_RIGHT" layoutX="565.0" layoutY="230.0" prefHeight="50.0" prefWidth="418.0" text="Yvonne Villavicencio" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
             </Label>
-            <Label fx:id="recipientAccID" alignment="CENTER_RIGHT" layoutX="620.0" layoutY="300.0" prefHeight="50.0" prefWidth="418.0" text="A001" textFill="WHITE" wrapText="true">
+            <Label fx:id="recipientAccID" alignment="CENTER_RIGHT" layoutX="565.0" layoutY="300.0" prefHeight="50.0" prefWidth="418.0" text="A001" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
             </Label>
-            <Label fx:id="senderAccID" alignment="CENTER_RIGHT" layoutX="620.0" layoutY="370.0" prefHeight="50.0" prefWidth="418.0" text="A020" textFill="WHITE" wrapText="true">
+            <Label fx:id="senderAccID" alignment="CENTER_RIGHT" layoutX="565.0" layoutY="370.0" prefHeight="50.0" prefWidth="418.0" text="A020" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
             </Label>
-            <Label fx:id="totalAmt" alignment="CENTER" layoutX="846.0" layoutY="440.0" prefHeight="58.0" prefWidth="194.0" text="0000.00" textFill="WHITE" wrapText="true">
+            <Label fx:id="totalAmt" alignment="CENTER" layoutX="790.0" layoutY="440.0" prefHeight="58.0" prefWidth="230.0" text="0000.00" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="System Bold Italic" size="40.0" />
                </font>
             </Label>
-            <Label layoutX="755.0" layoutY="440.0" prefHeight="58.0" prefWidth="30.0" text="₱" textFill="WHITE" wrapText="true">
+            <Label layoutX="719.0" layoutY="440.0" prefHeight="58.0" prefWidth="30.0" text="₱" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="System Bold" size="40.0" />
                </font>
@@ -110,12 +110,12 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label fx:id="transacID" alignment="CENTER_RIGHT" layoutX="865.0" layoutY="510.0" prefHeight="50.0" prefWidth="173.0" text="T001" textFill="WHITE" wrapText="true">
+            <Label fx:id="transacID" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="810.0" layoutY="507.0" prefHeight="50.0" prefWidth="170.0" text="T001" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
             </Label>
-            <Label fx:id="transacDate" alignment="CENTER_RIGHT" layoutX="715.0" layoutY="580.0" prefHeight="50.0" prefWidth="330.0" text="January 24, 2025" textFill="WHITE" wrapText="true">
+            <Label fx:id="transacDate" alignment="CENTER_RIGHT" layoutX="645.0" layoutY="580.0" prefHeight="50.0" prefWidth="330.0" text="January 24, 2025" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
