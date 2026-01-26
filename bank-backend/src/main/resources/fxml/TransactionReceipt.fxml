@@ -40,7 +40,7 @@
       </Button>
       <Pane layoutX="403.0" layoutY="198.0" opacity="0.75" prefHeight="805.0" prefWidth="1135.0" style="-fx-background-color: #00135e; -fx-background-radius: 35; -fx-border-radius: 30; -fx-border-color: #d0a933; -fx-border-width: 10;">
          <children>
-            <Label contentDisplay="CENTER" layoutX="295.0" layoutY="55.0" text="Transaction Receipt" textFill="WHITE">
+            <Label contentDisplay="CENTER" layoutX="285.0" layoutY="55.0" text="Transaction Receipt" textFill="WHITE">
                <font>
                   <Font name="Arial Bold" size="60.0" />
                </font>
@@ -65,7 +65,7 @@
                   <Font size="30.0" />
                </font>
             </Button>
-            <Label layoutX="290.0" layoutY="125.0" prefHeight="45.0" prefWidth="600.0" text="Your transaction has been successfully done!" textFill="WHITE">
+            <Label layoutX="280.0" layoutY="125.0" prefHeight="45.0" prefWidth="600.0" text="Your transaction has been successfully done!" textFill="WHITE">
                <font>
                   <Font size="30.0" />
                </font>
