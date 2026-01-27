@@ -1,6 +1,7 @@
 package com.bank.controller;
 
 import com.bank.util.DBConnection;
+import com.bank.controller.TransactionsController;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -86,14 +87,28 @@ public class HomeController implements Initializable {
         }
     }
 
-
-
-    // Handler for TRANSACTION HISTORY button
     @FXML
-    private void blippitransac1Handler() {
+    private void transacHistoryHandler(ActionEvent event) {
         System.out.println("Transaction History clicked");
-        // TODO: add actual code
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Transactions.fxml"));
+            Parent root = loader.load();
+
+            TransactionsController controller = loader.getController();
+            controller.setCustomerId(customerId); // pass the session/customer ID
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Transaction History");
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Optionally show alert for error
+        }
     }
+
 
     /**
      * CALLED FROM LoginController AFTER SUCCESSFUL LOGIN

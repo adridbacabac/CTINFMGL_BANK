@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import java.sql.Statement;
 
 public class ConfirmationPageController {
 
@@ -63,53 +65,103 @@ public class ConfirmationPageController {
         this.customerId = customerId;
         this.recipientId = recipientAccountId;
         this.amount = amount;
-        // Fetch sender account ID from customerId
-        String senderAccountId = fetchAccountIdForCustomer(customerId);
 
+        // ✅ Sender account ID
+        String senderAccountId = fetchAccountIdForCustomer(customerId);
         if (senderAccountId == null) {
             senderAccID.setText("Account not found");
-            // Optionally show alert or handle error
         } else {
             senderAccID.setText(senderAccountId);
         }
 
+        // ✅ Recipient account ID
         recipientAccID.setText(recipientAccountId);
-        totalTransferred.setText(String.format("%.2f", amount));
 
-        // If you want recipient name, fetch and set it similarly
-        // recipient.setText(fetchRecipientName(recipientAccountId));
+        // ✅ Recipient name
+        String recipientName = fetchRecipientName(recipientAccountId);
+        if (recipientName != null) {
+            recipient.setText(recipientName);
+        } else {
+            recipient.setText("Unknown recipient");
+        }
+
+        // ✅ Amount
+        totalTransferred.setText(String.format("%.2f", amount));
     }
 
 
+    private String fetchRecipientName(String recipientAccountId) {
+        String name = null;
+
+        String sql = """
+            SELECT c.customer_name
+            FROM accounts a
+            JOIN customers c ON a.customer_id = c.customer_id
+            WHERE a.account_id = ?
+        """;
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, recipientAccountId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                name = rs.getString("customer_name");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return name;
+    }
+
     @FXML
-    private void handleBackButtonAction(ActionEvent event) {
+    private void handleBackButton(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Home.fxml"));
+            FXMLLoader loader =
+                    new FXMLLoader(getClass().getResource("/fxml/MoneyTransfer.fxml"));
             Parent root = loader.load();
 
-            HomeController controller = loader.getController();
-            controller.setCustomerId(customerId);
+            MoneyTransferController controller = loader.getController();
+            controller.setCustomerId(customerId); // 🔥 KEEP SESSION
 
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Stage stage = (Stage) ((Node) event.getSource())
+                    .getScene()
+                    .getWindow();
             stage.setScene(new Scene(root));
-            stage.setTitle("Home");
+            stage.setTitle("Money Transfer");
             stage.show();
-        } catch (IOException e) {
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+
+
     @FXML
-    private void handleCancelButton(ActionEvent event) throws IOException {
-        switchScene(event, "/fxml/MoneyTransfer.fxml");
+    private void handleCancelButton(ActionEvent event) {
+        try {
+            FXMLLoader loader =
+                    new FXMLLoader(getClass().getResource("/fxml/Home.fxml"));
+            Parent root = loader.load();
+
+            HomeController controller = loader.getController();
+            controller.setCustomerId(customerId); // 🔥 KEEP SESSION
+
+            Stage stage = (Stage) ((Node) event.getSource())
+                    .getScene()
+                    .getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Home");
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    private void switchScene(ActionEvent event, String fxmlPath) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
 
    @FXML
     private void handleSendMoney(ActionEvent event) {
@@ -152,14 +204,17 @@ public class ConfirmationPageController {
             Parent root = loader.load();
 
             TransactionReceiptController controller = loader.getController();
-            controller.setReceiptData(
-                    fetchRecipientName(conn, recipientId), // recipient name
-                    recipientId,
-                    senderAccountId,
-                    amount,
-                    transactionId,
-                    java.time.LocalDateTime.now()
-            );
+           controller.setReceiptData(
+            customerId, // 🔥 PASS SESSION
+            fetchRecipientName(recipientId)
+,
+            recipientId,
+            senderAccountId,
+            amount,
+            transactionId,
+            LocalDateTime.now()
+         );
+
 
             // 7️⃣ Show receipt
             Stage stage = (Stage) ((Node) event.getSource())
@@ -175,7 +230,6 @@ public class ConfirmationPageController {
         }
     }
 
-
     @FXML
     private String insertTransaction(Connection conn,
                                     String fromAccount,
@@ -187,35 +241,34 @@ public class ConfirmationPageController {
             VALUES (?, ?, ?, NOW())
         """;
 
-        try (PreparedStatement ps =
-                    conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+        // Use Statement.RETURN_GENERATED_KEYS, NOT PreparedStatement.RETURN_GENERATED_KEYS
+        try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, fromAccount);
             ps.setString(2, toAccount);
             ps.setDouble(3, amount);
             ps.executeUpdate();
 
+            // Get the auto-increment primary key value (id)
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
-                return rs.getString(1); // transaction_id (T00X)
+                long autoId = rs.getLong(1);
+
+                // Now query the transaction_id column using this autoId
+                String fetchSql = "SELECT transaction_id FROM transactions WHERE id = ?";
+                try (PreparedStatement ps2 = conn.prepareStatement(fetchSql)) {
+                    ps2.setLong(1, autoId);
+                    ResultSet rs2 = ps2.executeQuery();
+                    if (rs2.next()) {
+                        return rs2.getString("transaction_id");
+                    }
+                }
             }
         }
+
         throw new Exception("Transaction ID not generated.");
     }
-    private String fetchRecipientName(Connection conn, String accountId) throws Exception {
-        String sql = "SELECT c.customer_name FROM customers c " +
-                     "JOIN accounts a ON c.customer_id = a.customer_id " +
-                     "WHERE a.account_id = ?";
 
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, accountId);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return rs.getString("customer_name");
-            }
-        }
-        return "Unknown Recipient";
-    }
 
     private String getSenderAccountId(Connection conn, String customerId) throws Exception {
         String sql = "SELECT account_id FROM accounts WHERE customer_id = ?";

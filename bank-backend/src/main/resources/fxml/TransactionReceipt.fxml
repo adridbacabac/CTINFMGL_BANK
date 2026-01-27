@@ -28,16 +28,6 @@
             <Font name="Arial Bold" size="33.0" />
          </font>
       </Label>
-      <ImageView fitHeight="90.0" fitWidth="150.0" layoutX="14.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../pic/BACK%20BUTTON%20LOGO.png" />
-         </image>
-      </ImageView>
-      <Button fx:id="backButton" layoutX="38.0" layoutY="49.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="75.0" prefWidth="282.0" style="-fx-background-color: transparent;" text="Back" textFill="WHITE">
-         <font>
-            <Font name="Arial Bold" size="34.0" />
-         </font>
-      </Button>
       <Pane layoutX="403.0" layoutY="198.0" opacity="0.75" prefHeight="805.0" prefWidth="1135.0" style="-fx-background-color: #00135e; -fx-background-radius: 35; -fx-border-radius: 30; -fx-border-color: #d0a933; -fx-border-width: 10;">
          <children>
             <Label contentDisplay="CENTER" layoutX="285.0" layoutY="55.0" text="Transaction Receipt" textFill="WHITE">

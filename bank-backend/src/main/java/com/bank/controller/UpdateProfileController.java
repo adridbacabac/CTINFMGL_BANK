@@ -16,11 +16,18 @@ import javafx.stage.Window;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UpdateProfileController {
+
+    // DB config constants at class level
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/bankdb";
+    private static final String DB_USER = "root";
+    private static final String DB_PASS = "Mm041114!";
+
 
     @FXML private TextField numberField; // new username
     @FXML private TextField pinField;    // new pin
@@ -68,49 +75,83 @@ public class UpdateProfileController {
         }
     }
 
+    @FXML
+    private void logoutButtonHandler(ActionEvent event) throws IOException {
+        // Optional: clear session data here if you have one
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Login");
+        stage.show();
+    }
 
     @FXML
-    private void loginButtonHandler(ActionEvent event) {
-        // Show confirmation dialog
+    private void deleteButtonHandler(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete Account Confirmation");
         alert.setHeaderText(null);
         alert.setContentText("Are you sure you want to delete your account? This action cannot be undone.");
 
-        // Get the current window to properly position the alert
         Window window = ((Node) event.getSource()).getScene().getWindow();
         alert.initOwner(window);
 
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
                 // User confirmed deletion
-                try {
-                    String sql = "DELETE FROM customers WHERE customer_id = ?";
-                    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                        pstmt.setString(1, customerId);
-                        int rowsDeleted = pstmt.executeUpdate();
+                try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS)) {
+                    conn.setAutoCommit(false);
 
-                        if (rowsDeleted > 0) {
-                            System.out.println("Account deleted successfully.");
-
-                            // Redirect to login page after deletion
-                            Parent loginRoot = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
-                            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                            stage.setScene(new Scene(loginRoot));
-                            stage.setTitle("Login");
-                            stage.show();
-                        } else {
-                            System.out.println("No matching account found to delete.");
-                        }
+                    // 1. Delete transactions linked to the user's accounts
+                    String deleteTransactionsSql = """
+                        DELETE t FROM transactions t
+                        JOIN accounts a ON t.from_account = a.account_id OR t.to_account = a.account_id
+                        WHERE a.customer_id = ?
+                    """;
+                    try (PreparedStatement ps = conn.prepareStatement(deleteTransactionsSql)) {
+                        ps.setString(1, customerId);
+                        ps.executeUpdate();
                     }
+
+                    // 2. Delete accounts
+                    String deleteAccountsSql = "DELETE FROM accounts WHERE customer_id = ?";
+                    try (PreparedStatement ps = conn.prepareStatement(deleteAccountsSql)) {
+                        ps.setString(1, customerId);
+                        ps.executeUpdate();
+                    }
+
+                    // 3. Delete customer
+                    String deleteCustomerSql = "DELETE FROM customers WHERE customer_id = ?";
+                    int rowsDeleted;
+                    try (PreparedStatement ps = conn.prepareStatement(deleteCustomerSql)) {
+                        ps.setString(1, customerId);
+                        rowsDeleted = ps.executeUpdate();
+                    }
+
+                    if (rowsDeleted > 0) {
+                        conn.commit();
+                        System.out.println("Account deleted successfully.");
+
+                        // Redirect to login page after deletion
+                        Parent loginRoot = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
+                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        stage.setScene(new Scene(loginRoot));
+                        stage.setTitle("Login");
+                        stage.show();
+                    } else {
+                        conn.rollback();
+                        System.out.println("No matching account found to delete.");
+                    }
+
                 } catch (Exception e) {
                     e.printStackTrace();
+                    // Optionally show an alert dialog here for the error
                 }
             } else {
                 System.out.println("Account deletion canceled.");
             }
         });
     }
+
 
 
     // =========================

@@ -33,7 +33,7 @@
             <Image url="@../pic/BACK%20BUTTON%20LOGO.png" />
          </image>
       </ImageView>
-      <Button fx:id="backButton" layoutX="38.0" layoutY="49.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="282.0" style="-fx-background-color: transparent;" text="Back" textFill="WHITE">
+      <Button fx:id="backButton" layoutX="38.0" layoutY="49.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="75.0" prefWidth="282.0" style="-fx-background-color: transparent;" text="Back" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="34.0" />
          </font>

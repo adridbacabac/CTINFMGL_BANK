@@ -30,7 +30,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button fx:id="backButton" layoutX="48.0" layoutY="59.0" mnemonicParsing="false" onAction="#handleBackButtonAction" prefHeight="75.0" prefWidth="282.0" style="-fx-background-color: transparent;" text="Back" textFill="WHITE">
+      <Button fx:id="backButton" layoutX="48.0" layoutY="59.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="75.0" prefWidth="302.0" style="-fx-background-color: transparent;" text="Back" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="34.0" />
          </font>

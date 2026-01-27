@@ -43,7 +43,7 @@
             <Font name="SansSerif Regular" size="22.0" />
          </font>
       </Button>
-      <Button fx:id="blippitransac1" alignment="CENTER_RIGHT" layoutX="1420.0" layoutY="400.0" mnemonicParsing="false" onAction="#blippitransacHandler" opacity="0.8" prefHeight="111.0" prefWidth="452.0" style="-fx-background-color: #04185f; -fx-background-radius: 30;" text="TRANSACTION HISTORY" textAlignment="RIGHT" textFill="WHITE">
+      <Button fx:id="transacHistory" alignment="CENTER_RIGHT" layoutX="1420.0" layoutY="400.0" mnemonicParsing="false" onAction="#transacHistoryHandler" opacity="0.8" prefHeight="111.0" prefWidth="452.0" style="-fx-background-color: #04185f; -fx-background-radius: 30;" text="TRANSACTION HISTORY" textAlignment="RIGHT" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="22.0" />
          </font>

@@ -13,9 +13,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+
+
 public class TransactionReceiptController {
 
     // ===== LABELS FROM FXML =====
+
+    private String customerId;      // to keep session
 
     @FXML
     private Label recipientActID;   // recipient account name
@@ -30,7 +34,7 @@ public class TransactionReceiptController {
     private Label totalAmt;         // amount
 
     @FXML
-    private Label transacID;        // transaction ID (T00X)
+    private Label transacID;        // transaction ID 
 
     @FXML
     private Label transacDate;      // transaction date
@@ -39,12 +43,15 @@ public class TransactionReceiptController {
     /**
      * Called AFTER loading the receipt page
      */
-    public void setReceiptData(String recipientName,
-                               String recipientAccountId,
-                               String senderAccountId,
-                               double amount,
-                               String transactionId,
-                               LocalDateTime transactionDate) {
+    public void setReceiptData(String customerId,
+                            String recipientName,
+                            String recipientAccountId,
+                            String senderAccountId,
+                            double amount,
+                            String transactionId,
+                            LocalDateTime transactionDate) {
+
+        this.customerId = customerId; // 🔥 SAVE SESSION
 
         recipientActID.setText(recipientName);
         recipientAccID.setText(recipientAccountId);
@@ -57,28 +64,30 @@ public class TransactionReceiptController {
         transacDate.setText(transactionDate.format(formatter));
     }
 
+
     // ===== BUTTON HANDLERS =====
 
-    @FXML
-    private void handleBackButton(ActionEvent event) throws IOException {
-        switchScene(event, "/fxml/Home.fxml");
-    }
 
     @FXML
-    private void handleDoneButton(ActionEvent event) throws IOException {
-        switchScene(event, "/fxml/Home.fxml");
+    private void handleDoneButton(ActionEvent event) {
+        try {
+            FXMLLoader loader =
+                    new FXMLLoader(getClass().getResource("/fxml/Home.fxml"));
+            Parent root = loader.load();
+
+            HomeController controller = loader.getController();
+            controller.setCustomerId(customerId); // 🔥 KEEP SESSION
+
+            Stage stage = (Stage) ((Node) event.getSource())
+                    .getScene()
+                    .getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Home");
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    // ===== SCENE SWITCH HELPER =====
-
-    private void switchScene(ActionEvent event, String fxmlPath)
-            throws IOException {
-
-        Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
-        Stage stage = (Stage) ((Node) event.getSource())
-                .getScene()
-                .getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
 }
