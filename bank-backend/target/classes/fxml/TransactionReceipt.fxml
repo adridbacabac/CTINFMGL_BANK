@@ -105,9 +105,9 @@
                   <Font name="System Bold" size="30.0" />
                </font>
             </Label>
-            <Label fx:id="transacDate" alignment="CENTER_RIGHT" layoutX="645.0" layoutY="580.0" prefHeight="50.0" prefWidth="330.0" text="January 24, 2025" textFill="WHITE" wrapText="true">
+            <Label fx:id="transacDate" alignment="CENTER_RIGHT" layoutX="539.0" layoutY="580.0" prefHeight="50.0" prefWidth="436.0" text="January 24, 2025" textFill="WHITE" wrapText="true">
                <font>
-                  <Font name="System Bold" size="30.0" />
+                  <Font name="System Bold" size="25.0" />
                </font>
             </Label>
          </children>
