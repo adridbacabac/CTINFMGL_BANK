@@ -6,7 +6,6 @@ public class Account {
     private String customerId;
     private String accountType;
     private double balance;
-    private String status;
 
     public Account(int id, String accountId, String customerId,
                    String accountType, double balance, String status) {
@@ -15,7 +14,6 @@ public class Account {
         this.customerId = customerId;
         this.accountType = accountType;
         this.balance = balance;
-        this.status = status;
     }
 
     public String getAccountId() { return accountId; }

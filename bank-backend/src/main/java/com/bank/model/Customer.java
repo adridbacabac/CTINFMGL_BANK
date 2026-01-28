@@ -1,10 +1,15 @@
 package com.bank.model;
 
 public class Customer {
+    /** Database record ID */
     private int id;
+    /** Customer identifier string */
     private String customerId;
+    /** Customer's full name */
     private String name;
+    /** Customer's login username */
     private String username;
+    /** Customer's login PIN */
     private String pin;
 
     public Customer(int id, String customerId, String name, String username, String pin) {

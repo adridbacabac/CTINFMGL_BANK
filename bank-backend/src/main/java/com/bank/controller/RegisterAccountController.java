@@ -21,17 +21,14 @@ import java.sql.SQLException;
 /**
  * RegisterAccountController
  * Handles account registration for newly created customers.
- * Allows selection of account type and status, then creates account record in database.
+ * Allows selection of account type and creates account record with default "Active" status.
  */
 public class RegisterAccountController {
 
     // ===== UI COMPONENTS FROM FXML =====
-    /** Choice box for selecting account type (Debit, Credit, Current) */
+    /** Choice box for selecting account type (Debit) */
     @FXML
     private ChoiceBox<String> fareChoice;
-    /** Choice box for selecting account status (Active, Inactive) */
-    @FXML
-    private ChoiceBox<String> fareChoice1;
     /** "Register Account" button */
     @FXML
     private Button loginButton;
@@ -46,7 +43,7 @@ public class RegisterAccountController {
 
     /**
      * Initializes the controller after FXML is loaded
-     * Establishes database connection and populates choice boxes with default values
+     * Establishes database connection and populates account type dropdown
      */
     @FXML
     public void initialize() {
@@ -58,13 +55,8 @@ public class RegisterAccountController {
         }
 
         // Populate account type options
-        fareChoice.setItems(FXCollections.observableArrayList("Debit", "Credit", "Current"));
-        // Populate status options
-        fareChoice1.setItems(FXCollections.observableArrayList("Active", "Inactive"));
-
-        // Set default selections
+        fareChoice.setItems(FXCollections.observableArrayList("Debit"));
         fareChoice.getSelectionModel().selectFirst();
-        fareChoice1.getSelectionModel().selectFirst();
     }
 
     // ===== DATA SETUP =====
@@ -82,18 +74,17 @@ public class RegisterAccountController {
 
     /**
      * Handles account registration when "Register Account" button is clicked
-     * Validates selections, inserts account into database, and navigates to login page
+     * Validates selection, inserts account into database with default "Active" status, and navigates to login page
      *
      * @param event ActionEvent from button click
      */
     @FXML
     private void loginButtonHandler(ActionEvent event) {
         String accountType = fareChoice.getValue();
-        String status = fareChoice1.getValue();
 
-        // Validate selections are made
-        if (accountType == null || status == null) {
-            showAlert("Please select account type and status.");
+        // Validate account type is selected
+        if (accountType == null) {
+            showAlert("Please select account type.");
             return;
         }
 
@@ -103,13 +94,14 @@ public class RegisterAccountController {
             return;
         }
 
-        // Insert account into database
+        // Insert account into database with default "Active" status
         String sql = "INSERT INTO accounts (customer_id, account_type, status) VALUES (?, ?, ?)";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, customerId);
             pstmt.setString(2, accountType);
-            pstmt.setString(3, status);
+            pstmt.setString(3, "Active");  // Default status
+
             pstmt.executeUpdate();
 
             showAlert("Account registered successfully!");
