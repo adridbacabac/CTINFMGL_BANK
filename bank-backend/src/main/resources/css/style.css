@@ -1,10 +1,11 @@
 .table-view {
-    -fx-background-color: #f9f9f9;
+    -fx-background-color: #ffffff;
     -fx-border-color: #ccc;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
     -fx-font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    -fx-font-size: 14px;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
 }
 
 .table-view .column-header-background {
@@ -18,7 +19,7 @@
 }
 
 .table-view .column-header .label {
-    -fx-text-fill: white;
+    -fx-text-fill: rgb(0, 0, 0);
     -fx-font-weight: bold;
 }
 

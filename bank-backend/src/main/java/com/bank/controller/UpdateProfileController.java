@@ -157,12 +157,32 @@ public class UpdateProfileController {
     // =========================
     // UPDATE USERNAME BUTTON
     // =========================
-    @FXML
+   @FXML
     private void handleUpdateUsername(ActionEvent event) {
+
         String newUsername = numberField.getText().trim();
 
+        // 1️⃣ Empty check
         if (newUsername.isEmpty()) {
-            System.out.println("Username cannot be empty");
+            showError("Invalid Username", "Username cannot be empty.");
+            return;
+        }
+
+        // 2️⃣ Minimum length check
+        if (newUsername.length() < 3) {
+            showError(
+                "Invalid Username",
+                "Username must be at least 3 characters long."
+            );
+            return;
+        }
+
+        // 3️⃣ Allowed characters check
+        if (!newUsername.matches("^[a-zA-Z0-9_]+$")) {
+            showError(
+                "Invalid Username",
+                "Username can only contain letters, numbers, and underscores (_)."
+            );
             return;
         }
 
@@ -173,14 +193,44 @@ public class UpdateProfileController {
             pstmt.setString(2, customerId);
 
             int rows = pstmt.executeUpdate();
+
             if (rows > 0) {
-                System.out.println("Username updated");
                 usernamelabel.setText(newUsername); // 🔥 update UI immediately
+                showSuccess(
+                    "Username Updated",
+                    "Your username was updated successfully."
+                );
+            } else {
+                showError("Update Failed", "Username was not updated.");
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
+            showError(
+                "Database Error",
+                "Something went wrong while updating username."
+            );
         }
     }
+
+
+    private void showError(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void showSuccess(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+
 
     // =========================
     // UPDATE PIN BUTTON
@@ -189,8 +239,25 @@ public class UpdateProfileController {
     private void handleUpdatePin(ActionEvent event) {
         String newPin = pinField.getText().trim();
 
+        // ❌ Empty PIN
         if (newPin.isEmpty()) {
-            System.out.println("PIN cannot be empty");
+            showAlert(
+                Alert.AlertType.ERROR,
+                "Invalid PIN",
+                "PIN field is empty",
+                "Please enter a 4-digit PIN."
+            );
+            return;
+        }
+
+        // ❌ Not exactly 4 digits
+        if (!newPin.matches("\\d{4}")) {
+            showAlert(
+                Alert.AlertType.ERROR,
+                "Invalid PIN",
+                "Incorrect PIN format",
+                "PIN must contain exactly 4 numbers."
+            );
             return;
         }
 
@@ -202,11 +269,48 @@ public class UpdateProfileController {
 
             int rows = pstmt.executeUpdate();
             if (rows > 0) {
-                System.out.println("PIN updated");
+
+                // ✅ Success notification
+                showAlert(
+                    Alert.AlertType.INFORMATION,
+                    "PIN Updated",
+                    "PIN updated successfully",
+                    "For security reasons, you will be logged out."
+                );
+
+                // 🔐 LOGOUT → LOGIN PAGE
+                FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/fxml/Login.fxml")
+                );
+                Parent root = loader.load();
+
+                Stage stage = (Stage) ((Node) event.getSource())
+                        .getScene()
+                        .getWindow();
+                stage.setScene(new Scene(root));
+                stage.setTitle("Login");
+                stage.show();
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
+            showAlert(
+                Alert.AlertType.ERROR,
+                "Database Error",
+                "Failed to update PIN",
+                "Please try again later."
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String header, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     // =========================

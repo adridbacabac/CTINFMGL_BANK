@@ -60,7 +60,7 @@ public class TransactionReceiptController {
         transacID.setText(transactionId);
 
         DateTimeFormatter formatter =
-                DateTimeFormatter.ofPattern("MMMM dd, yyyy • hh:mm a");
+                DateTimeFormatter.ofPattern("MMMM dd, yyyy");
         transacDate.setText(transactionDate.format(formatter));
     }
 
