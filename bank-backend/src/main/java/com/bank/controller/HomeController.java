@@ -1,17 +1,15 @@
 package com.bank.controller;
 
 import com.bank.util.DBConnection;
-import com.bank.controller.TransactionsController;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import javafx.scene.Node;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,21 +21,38 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
+/**
+ * HomeController
+ * Manages the home dashboard after user login.
+ * Displays user information, account details, and navigation to other features.
+ */
 public class HomeController implements Initializable {
 
-    // ===== LABELS FROM FXML =====
-    @FXML private Label usernamelabel;     // "Hello, <name>"
-    @FXML private Label accnum;            // account_id
-    @FXML private Label customername;     // customer_name
-    @FXML private Label baldate;           // current date
-    @FXML private Label balanceamt;        // balance
+    // ===== UI COMPONENTS FROM FXML =====
+    /** Displays greeting with customer name */
+    @FXML private Label usernamelabel;
+    /** Displays account ID */
+    @FXML private Label accnum;
+    /** Displays customer full name */
+    @FXML private Label customername;
+    /** Displays current date */
+    @FXML private Label baldate;
+    /** Displays account balance */
+    @FXML private Label balanceamt;
 
-    // ===== DATA =====
+    // ===== DATA MEMBERS =====
+    /** Customer ID of the currently logged-in user */
     private String customerId;
-
+    /** Database connection */
     private Connection conn;
 
-    // Handler for HELP & SUPPORT button
+    // ===== EVENT HANDLERS =====
+
+    /**
+     * Navigates to Help & Support page
+     *
+     * @param event ActionEvent from button click
+     */
     @FXML
     private void blippitransacHandler(ActionEvent event) {
         try {
@@ -49,9 +64,7 @@ public class HomeController implements Initializable {
             HelpSupportController controller = loader.getController();
             controller.setCustomerId(customerId);
 
-            Stage stage = (Stage) ((Node) event.getSource())
-                    .getScene()
-                    .getWindow();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Help & Support");
             stage.show();
@@ -61,11 +74,13 @@ public class HomeController implements Initializable {
         }
     }
 
-
-    // Handler for TRANSFER MONEY button
+    /**
+     * Navigates to Money Transfer page
+     *
+     * @param event ActionEvent from button click
+     */
     @FXML
     private void blippitixHandler(ActionEvent event) {
-        System.out.println("Transfer Money button clicked!");
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/fxml/MoneyTransfer.fxml")
@@ -73,11 +88,9 @@ public class HomeController implements Initializable {
             Parent root = loader.load();
 
             MoneyTransferController controller = loader.getController();
-            controller.setCustomerId(customerId); // 🔥 PASS LOGGED-IN USER
+            controller.setCustomerId(customerId);
 
-            Stage stage = (Stage) ((Node) event.getSource())
-                    .getScene()
-                    .getWindow();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Transfer Money");
             stage.show();
@@ -87,16 +100,19 @@ public class HomeController implements Initializable {
         }
     }
 
+    /**
+     * Navigates to Transaction History page
+     *
+     * @param event ActionEvent from button click
+     */
     @FXML
     private void transacHistoryHandler(ActionEvent event) {
-        System.out.println("Transaction History clicked");
-
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Transactions.fxml"));
             Parent root = loader.load();
 
             TransactionsController controller = loader.getController();
-            controller.setCustomerId(customerId); // pass the session/customer ID
+            controller.setCustomerId(customerId);
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -105,24 +121,16 @@ public class HomeController implements Initializable {
 
         } catch (IOException e) {
             e.printStackTrace();
-            // Optionally show alert for error
         }
     }
 
-
     /**
-     * CALLED FROM LoginController AFTER SUCCESSFUL LOGIN
+     * Navigates to Update Profile page
+     *
+     * @param event ActionEvent from button click
      */
-    public void setCustomerId(String customerId) {
-        System.out.println("setCustomerId called with: " + customerId);
-        this.customerId = customerId;
-        loadAccountData();
-    }
-
     @FXML
     private void handleProfileButtonAction(ActionEvent event) {
-        System.out.println("PROFILE BUTTON CLICKED"); // 👈 DEBUG
-
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/fxml/UpdateProfile.fxml")
@@ -130,11 +138,9 @@ public class HomeController implements Initializable {
             Parent root = loader.load();
 
             UpdateProfileController controller = loader.getController();
-            controller.setCustomerId(customerId); // ✅ PASS LOGGED-IN USER
+            controller.setCustomerId(customerId);
 
-            Stage stage = (Stage) ((Node) event.getSource())
-                    .getScene()
-                    .getWindow();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Update Profile");
             stage.show();
@@ -144,6 +150,15 @@ public class HomeController implements Initializable {
         }
     }
 
+    // ===== INITIALIZATION & DATA SETUP =====
+
+    /**
+     * Initializes the controller after FXML is loaded
+     * Establishes database connection and displays current date
+     *
+     * @param url the URL of the FXML file
+     * @param resourceBundle the ResourceBundle for localization
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -152,6 +167,7 @@ public class HomeController implements Initializable {
             e.printStackTrace();
         }
 
+        // Display current date in the format "Month dd, yyyy"
         baldate.setText(
             LocalDate.now().format(
                 DateTimeFormatter.ofPattern("MMMM dd, yyyy")
@@ -160,11 +176,23 @@ public class HomeController implements Initializable {
     }
 
     /**
-     * LOAD USER DATA FROM DATABASE
+     * Sets the customer ID and loads account data
+     * Called from LoginController after successful authentication
+     *
+     * @param customerId the ID of the logged-in customer
+     */
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+        loadAccountData();
+    }
+
+    // ===== DATABASE OPERATIONS =====
+
+    /**
+     * Loads customer and account information from the database
+     * Updates all UI labels with fetched data
      */
     private void loadAccountData() {
-        System.out.println("Loading data for customerId: " + customerId);
-
         String sql = """
                 SELECT c.customer_name, a.account_id, a.balance
                 FROM customers c
@@ -181,16 +209,11 @@ public class HomeController implements Initializable {
                 String accountId = rs.getString("account_id");
                 double balance = rs.getDouble("balance");
 
-                System.out.println("Fetched from DB - customerName: " + customerName +
-                                ", accountId: " + accountId + ", balance: " + balance);
-
-                // Update UI labels
+                // Update UI labels with fetched data
                 usernamelabel.setText(customerName);
                 customername.setText(customerName);
                 accnum.setText(accountId);
                 balanceamt.setText(String.format("%.2f", balance));
-            } else {
-                System.out.println("No record found for customerId: " + customerId);
             }
         } catch (SQLException e) {
             e.printStackTrace();
